@@ -10,7 +10,7 @@
             </class>
             <class name="com.mobiquity.test.service.PostsTest">
                 <methods>
-                    <include name="verifyCommentsforPosts"/>
+                    <include name="verifyEmailforPosts"/>
                 </methods>
             </class>
             <class name="com.mobiquity.test.service.UsersTest">
