@@ -11,9 +11,6 @@ public class Constants {
 
 
 
-    public static final String dummyUser = "Delphine";
-    public static final String dummyUserId = "9";
-
 
 
 
