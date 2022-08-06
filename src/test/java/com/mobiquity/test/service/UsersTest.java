@@ -5,59 +5,49 @@ import com.mobiquity.test.models.response.Album;
 import com.mobiquity.test.models.response.Post;
 import com.mobiquity.test.models.response.User;
 import com.mobiquity.test.utils.Helper;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
 import static com.mobiquity.test.utils.Constants.*;
+import static io.restassured.RestAssured.given;
 
-public class UsersTest {
-
+public class UsersTest extends  BaseClass{
     private int id;
     private RestAssuredClient restAssuredClient;
 
-    public UsersTest(){
+    public UsersTest() {
         this.restAssuredClient = new RestAssuredClient(baseURL);
     }
 
-    @BeforeClass
-    public void getUserId(){
-        id= Helper.getUserId();
-    }
-
-
-    /*@Test(priority = 0)
-    public void verifyUser(){
-        User[] userArray = restAssuredClient.httpGet(users).as(User[].class);
-        List<User> userList = Arrays.asList(userArray);
-        for(User user: userList){
-            int id;
-            if(user.getUsername().equalsIgnoreCase(dummyUser)){
-                id=user.getId();
-                System.out.println("User Id ::"+id);
-            }
-        }
-    }*/
-
     @Test(priority = 1)
-    public void verifyPostsForUser(){
+    public void verifyPostsForUser() {
 
-        Post[] postArray = restAssuredClient.httpGet(users+id+posts).as(Post[].class);
+        Post[] postArray = restAssuredClient.httpGet(users +  ((BaseClass)this).id + posts).as(Post[].class);
         List<Post> postList = Arrays.asList(postArray);
-        for (Post post: postList){
-            System.out.println("Post IDs :: "+post.getId());
+        for (Post post : postList) {
+            System.out.println("Post IDs :: " + post.getId());
+            int statusCode = restAssuredClient.httpGet(users + id + posts).getStatusCode();
+            Assert.assertEquals(statusCode, 200);
         }
     }
 
     @Test(priority = 2)
-    public void verifyAlbumsForUser(){
+    public void verifyAlbumsForUser() {
 
-        Album[] albumArray = restAssuredClient.httpGet(users+id+albums).as(Album[].class);
+        Album[] albumArray = restAssuredClient.httpGet(users + ((BaseClass)this).id + albums).as(Album[].class);
         List<Album> albumList = Arrays.asList(albumArray);
-        for (Album album: albumList){
-            System.out.println("Album IDs :: "+album.getId());
+        for (Album album : albumList) {
+            System.out.println("Album IDs :: " + album.getId());
+            int statusCode = restAssuredClient.httpGet(users + ((BaseClass)this).id + posts).getStatusCode();
+            Assert.assertEquals(statusCode, 200);
         }
     }
 
 }
+

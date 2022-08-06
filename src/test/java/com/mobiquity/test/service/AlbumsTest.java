@@ -13,8 +13,9 @@ import java.util.List;
 
 import static com.mobiquity.test.utils.Constants.*;
 
-public class AlbumsTest {
+public class AlbumsTest extends BaseClass{
     private RestAssuredClient restAssuredClient;
+    private int id;
 
     public AlbumsTest(){
         this.restAssuredClient = new RestAssuredClient(baseURL);
@@ -24,7 +25,7 @@ public class AlbumsTest {
     public void verifyPhotosforAlbums(){
         Photo[] photoArray;
         List<List<Photo>> listPhoto = new ArrayList<>();
-        Album[] albumArray = restAssuredClient.httpGet(users+dummyUserId+albums).as(Album[].class);
+        Album[] albumArray = restAssuredClient.httpGet(users+((BaseClass)this).id+albums).as(Album[].class);
         List<Album> albumList = Arrays.asList(albumArray);
 
         for(Album album: albumList) {

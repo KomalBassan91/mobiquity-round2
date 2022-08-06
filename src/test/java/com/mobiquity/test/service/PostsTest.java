@@ -13,9 +13,9 @@ import java.util.List;
 
 import static com.mobiquity.test.utils.Constants.*;
 
-public class PostsTest {
+public class PostsTest extends BaseClass{
     private RestAssuredClient restAssuredClient;
-
+    private int id;
 
     public PostsTest(){
         this.restAssuredClient = new RestAssuredClient(baseURL);
@@ -26,7 +26,7 @@ public class PostsTest {
     public void verifyCommentsforPosts(){
         Comment[] commentArray;
         List<List<Comment>> listComment = new ArrayList<>();
-        Post[] postArray = restAssuredClient.httpGet(users+dummyUserId+posts).as(Post[].class);
+        Post[] postArray = restAssuredClient.httpGet(users+((BaseClass)this).id+posts).as(Post[].class);
         List<Post> postList = Arrays.asList(postArray);
 
         for(Post post: postList) {
