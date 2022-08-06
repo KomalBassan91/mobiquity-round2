@@ -14,7 +14,8 @@ public class RestAssuredClient extends RestAssured{
 
 
     public Response httpGet(String url){
-        RequestSpecification httpGet = RestAssured.given().log().all(true);
+        RequestSpecification httpGet = RestAssured.given().log().uri();
+        //RequestSpecification httpGet = RestAssured.given().log().all(true);
         httpGet.baseUri(baseUrl);
         httpGet.header("Content-Type","application/json");
         return httpGet.get(url);
