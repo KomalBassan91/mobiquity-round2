@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Komal/dev/Mobiquity/mobiquity-assignment/mobiquity-assignment">
+        <classes>
+            <class name="com.mobiquity.test.service.AlbumsTest">
+                <methods>
+                    <include name="verifyPhotosforAlbums"/>
+                </methods>
+            </class>
+            <class name="com.mobiquity.test.service.PostsTest">
+                <methods>
+                    <include name="verifyCommentsforPosts"/>
+                </methods>
+            </class>
+            <class name="com.mobiquity.test.service.UsersTest">
+                <methods>
+                    <include name="verifyPostsForUser"/>
+                    <include name="verifyAlbumsForUser"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
