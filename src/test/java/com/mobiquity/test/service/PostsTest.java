@@ -4,6 +4,7 @@ import com.mobiquity.test.client.RestAssuredClient;
 import com.mobiquity.test.models.response.Comment;
 import com.mobiquity.test.models.response.Post;
 import com.mobiquity.test.utils.Helper;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,33 +14,39 @@ import java.util.List;
 
 import static com.mobiquity.test.utils.Constants.*;
 
-public class PostsTest extends BaseClass{
+public class PostsTest extends BaseClass {
     private RestAssuredClient restAssuredClient;
-    private int id;
-
-    public PostsTest(){
+    public PostsTest() {
         this.restAssuredClient = new RestAssuredClient(baseURL);
     }
 
 
     @Test
-    public void verifyCommentsforPosts(){
+    public void verifyEmailforPosts() {
+        logger = report.createTest("Verify Email list for user :"+Helper.getUserId());
         Comment[] commentArray;
         List<List<Comment>> listComment = new ArrayList<>();
-        Post[] postArray = restAssuredClient.httpGet(users+((BaseClass)this).id+posts).as(Post[].class);
+        Post[] postArray = restAssuredClient.httpGet(users + Helper.getUserId() + posts).as(Post[].class);
         List<Post> postList = Arrays.asList(postArray);
 
-        for(Post post: postList) {
+        for (Post post : postList) {
             commentArray = restAssuredClient.httpGet(posts + post.getId() + comments).as(Comment[].class);
             listComment.add(Arrays.asList(commentArray));
         }
-
-        for(int i=0; i<listComment.size()-1;i++){
-            //System.out.println(listComment.get(i));
-            for (int j=0;j<listComment.get(i).size();j++){
-                System.out.println(listComment.get(i).get(j).getEmail());
+        List emailList = new ArrayList();
+        for (int i = 0; i < listComment.size() - 1; i++) {
+            for (int j = 0; j < listComment.get(i).size(); j++) {
+                emailList.add(Helper.isValidEmail(listComment.get(i).get(j).getEmail()));
             }
         }
+        if (emailList.contains(false)) {
+            Assert.fail("Assert False");
+            logger.fail("Test Fail");
+        } else if (!emailList.contains(false)) {
+            Assert.assertTrue(true);
+            logger.pass("Test Pass");
+        }
+
 
     }
 

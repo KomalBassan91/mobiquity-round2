@@ -5,20 +5,16 @@ import com.mobiquity.test.models.response.Album;
 import com.mobiquity.test.models.response.Post;
 import com.mobiquity.test.models.response.User;
 import com.mobiquity.test.utils.Helper;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static com.mobiquity.test.utils.Constants.*;
-import static io.restassured.RestAssured.given;
 
-public class UsersTest extends  BaseClass{
-    private int id;
+
+public class UsersTest extends BaseClass {
     private RestAssuredClient restAssuredClient;
 
     public UsersTest() {
@@ -27,11 +23,11 @@ public class UsersTest extends  BaseClass{
 
     @Test(priority = 1)
     public void verifyPostsForUser() {
-
-        Post[] postArray = restAssuredClient.httpGet(users +  ((BaseClass)this).id + posts).as(Post[].class);
+        logger = report.createTest("Verify Posts for user :" + Helper.getUserId());
+        Post[] postArray = restAssuredClient.httpGet(users + Helper.getUserId() + posts).as(Post[].class);
         List<Post> postList = Arrays.asList(postArray);
         for (Post post : postList) {
-            System.out.println("Post IDs :: " + post.getId());
+            logger.pass("Post IDs :" + post.getId());
             int statusCode = restAssuredClient.httpGet(users + id + posts).getStatusCode();
             Assert.assertEquals(statusCode, 200);
         }
@@ -39,13 +35,24 @@ public class UsersTest extends  BaseClass{
 
     @Test(priority = 2)
     public void verifyAlbumsForUser() {
-
-        Album[] albumArray = restAssuredClient.httpGet(users + ((BaseClass)this).id + albums).as(Album[].class);
+        logger = report.createTest("Verify Albums for user :" + Helper.getUserId());
+        Album[] albumArray = restAssuredClient.httpGet(users + Helper.getUserId() + albums).as(Album[].class);
         List<Album> albumList = Arrays.asList(albumArray);
         for (Album album : albumList) {
-            System.out.println("Album IDs :: " + album.getId());
-            int statusCode = restAssuredClient.httpGet(users + ((BaseClass)this).id + posts).getStatusCode();
+            logger.pass("Album IDs :" + album.getId());
+            int statusCode = restAssuredClient.httpGet(users + ((BaseClass) this).id + posts).getStatusCode();
             Assert.assertEquals(statusCode, 200);
+        }
+    }
+
+    @Test(priority = 2)
+    public void verifyIncorrectUser() {
+        logger = report.createTest("Test for incorrect user id :" + Helper.getIncorrectUserId());
+        User user = restAssuredClient.httpGet(users + Helper.getIncorrectUserId()).as(User.class);
+        if (user.getUsername() == null) {
+            int statusCode = restAssuredClient.httpGet(users + Helper.getIncorrectUserId()).getStatusCode();
+            Assert.assertEquals(statusCode, 404);
+            logger.pass("User Not found");
         }
     }
 
