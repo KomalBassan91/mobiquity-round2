@@ -10,18 +10,17 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
+import static com.mobiquity.test.utils.Constants.reportsFilePath;
+
 public class BaseClass {
-    public int id;
-    public ExcelDataProvider excel;
     public ExtentReports report;
     public ExtentTest logger;
-    private RestAssuredClient restAssuredClient;
 
 
     @BeforeClass(alwaysRun = true)
     public void setupSuite() {
         Reporter.log("Setting up reports and Tests are getting ready", true);
-        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter("C://Komal//dev//Mobiquity//mobiquity-round2//reports//mobiquity_" + Helper.getCurrentDateAndTime() + ".html");
+        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter(reportsFilePath + Helper.getCurrentDateAndTime() + ".html");
         report = new ExtentReports();
         report.attachReporter(extentSparkReporter);
         Reporter.log("Test can be Started", true);

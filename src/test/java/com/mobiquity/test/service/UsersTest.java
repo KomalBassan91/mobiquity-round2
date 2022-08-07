@@ -28,7 +28,7 @@ public class UsersTest extends BaseClass {
         List<Post> postList = Arrays.asList(postArray);
         for (Post post : postList) {
             logger.pass("Post IDs :" + post.getId());
-            int statusCode = restAssuredClient.httpGet(users + id + posts).getStatusCode();
+            int statusCode = restAssuredClient.httpGet(users + Helper.getUserId() + posts).getStatusCode();
             Assert.assertEquals(statusCode, 200);
         }
     }
@@ -40,7 +40,7 @@ public class UsersTest extends BaseClass {
         List<Album> albumList = Arrays.asList(albumArray);
         for (Album album : albumList) {
             logger.pass("Album IDs :" + album.getId());
-            int statusCode = restAssuredClient.httpGet(users + ((BaseClass) this).id + posts).getStatusCode();
+            int statusCode = restAssuredClient.httpGet(users + Helper.getUserId() + posts).getStatusCode();
             Assert.assertEquals(statusCode, 200);
         }
     }
