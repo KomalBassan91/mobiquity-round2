@@ -17,6 +17,7 @@
                 <methods>
                     <include name="verifyPostsForUser"/>
                     <include name="verifyAlbumsForUser"/>
+                    <include name = "verifyIncorrectUser"/>
                 </methods>
             </class>
         </classes>
