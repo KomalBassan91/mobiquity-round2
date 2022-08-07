@@ -5,12 +5,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 
+import static com.mobiquity.test.utils.Constants.excelFilePath;
+
 public class ExcelDataProvider {
     public XSSFWorkbook wb;
     public FileInputStream fis;
 
     public ExcelDataProvider() {
-        File src = new File("C://Komal//dev//Mobiquity//mobiquity-assignment//mobiquity-assignment//src//testdata//testdatafile.xlsx");
+        File src = new File(excelFilePath);
         try {
             fis = new FileInputStream(src);
             wb = new XSSFWorkbook(fis);
