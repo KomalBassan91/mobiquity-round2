@@ -12,7 +12,7 @@ public class ExcelDataProvider {
     public FileInputStream fis;
 
     public ExcelDataProvider() {
-        File src = new File(excelFilePath);
+        File src = new File(System.getProperty("user.dir")+excelFilePath);
         try {
             fis = new FileInputStream(src);
             wb = new XSSFWorkbook(fis);
